@@ -1,48 +1,121 @@
 import express from "express";
 import multer from "multer";
 import cors from "cors";
-import axios from "axios";
 import { Client } from "@gradio/client";
-import fs from "fs";
 import dotenv from "dotenv";
 
+// Load environment variables
 dotenv.config();
 
-const app = express();
-const PORT = process.env.PORT || 5000;
-const HF_SPACE = process.env.HF_SPACE; // Your Hugging Face Space
+// Constants
+const CONFIG = {
+  PORT: process.env.PORT || 5000,
+  HF_SPACE: process.env.HF_SPACE,
+  MAX_FILE_SIZE: 5 * 1024 * 1024, // 5MB limit
+  ALLOWED_MIME_TYPES: ["image/jpeg", "image/png"],
+};
 
-// Enable CORS for frontend requests
+// Initialize Express app
+const app = express();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Multer setup for handling image uploads
+// Multer configuration
 const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: CONFIG.MAX_FILE_SIZE,
+  },
+  fileFilter: (req, file, cb) => {
+    if (CONFIG.ALLOWED_MIME_TYPES.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error("Invalid file type. Only JPEG, PNG and GIF are allowed."));
+    }
+  },
+});
 
-// Route to send MRI images to Hugging Face API
-app.post("/", upload.single("image"), async (req, res) => {
+// Initialize Gradio client outside request handler
+let gradioClient = null;
+
+// Initialize Gradio client connection
+const initializeGradioClient = async () => {
   try {
+    gradioClient = await Client.connect(CONFIG.HF_SPACE);
+    console.log("Successfully connected to Gradio client");
+  } catch (error) {
+    console.error("Failed to initialize Gradio client:", error);
+    throw error;
+  }
+};
+
+// Error handling middleware
+const errorHandler = (err, req, res, next) => {
+  console.error("Error:", err);
+  res.status(500).json({
+    error: err.message || "Internal server error",
+    status: "error",
+  });
+};
+
+// Route to process MRI images
+app.post("/predict", upload.single("image"), async (req, res, next) => {
+  try {
+    // Validate request
     if (!req.file) {
-      return res.status(400).json({ error: "No image uploaded." });
+      return res.status(400).json({
+        error: "No image uploaded.",
+        status: "error",
+      });
     }
 
-    // Convert buffer to Blob format
-    const imageBuffer = req.file.buffer;
-    const blob = new Blob([imageBuffer], { type: req.file.mimetype });
+    // Ensure Gradio client is initialized
+    if (!gradioClient) {
+      await initializeGradioClient();
+    }
 
-    // Connect to Gradio API
-    const client = await Client.connect(HF_SPACE);
-    const result = await client.predict("/predict", { image: blob });
+    // Process image
+    const imageBlob = new Blob([req.file.buffer], { type: req.file.mimetype });
+    const result = await gradioClient.predict("/predict", { image: imageBlob });
 
-    res.json({ segmentation_result: result.data });
+    // Format and send response
+    res.json({
+      status: "success",
+      data: {
+        prediction: result.data[0],
+        timestamp: new Date().toISOString(),
+      },
+    });
   } catch (error) {
-    console.error("Error processing image:", error);
-    res.status(500).json({ error: "Failed to process the image." });
+    next(error);
   }
 });
 
-// Start the Express server
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+// Health check endpoint
+app.get("/health", (req, res) => {
+  res.json({
+    status: "healthy",
+    timestamp: new Date().toISOString(),
+  });
 });
+
+// Apply error handling middleware
+app.use(errorHandler);
+
+// Start server
+const startServer = async () => {
+  try {
+    await initializeGradioClient();
+    app.listen(CONFIG.PORT, () => {
+      console.log(`Server running at http://localhost:${CONFIG.PORT}`);
+    });
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
+};
+
+startServer();
