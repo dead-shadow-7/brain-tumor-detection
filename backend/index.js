@@ -80,7 +80,7 @@ app.post("/predict", upload.single("image"), async (req, res, next) => {
     // Process image
     const imageBlob = new Blob([req.file.buffer], { type: req.file.mimetype });
     const result = await gradioClient.predict("/predict", { image: imageBlob });
-
+    console.log("Prediction result:", result);
     // Format and send response
     res.json({
       status: "success",
