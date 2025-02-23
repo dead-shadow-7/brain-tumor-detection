@@ -94,6 +94,10 @@ app.post("/predict", upload.single("image"), async (req, res, next) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("OK");
+});
+
 // Health check endpoint
 app.get("/health", (req, res) => {
   res.json({
