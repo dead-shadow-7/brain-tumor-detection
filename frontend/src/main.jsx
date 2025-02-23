@@ -4,8 +4,8 @@ import App from "./App";
 import "./styles/global.css";
 import ReactGA from "react-ga4";
 
-const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
-ReactGA.initialize(measurementId);
+// Initialize GA4 with your measurement ID
+ReactGA.initialize("G-EPF21ZKEHC");
 
 // Optional: Enable debug mode during development
 if (process.env.NODE_ENV === "development") {
