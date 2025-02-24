@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "../styles/imageupload.css";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const ImageUpload = ({ setPrediction }) => {
@@ -51,14 +52,16 @@ const ImageUpload = ({ setPrediction }) => {
         type="file"
         accept="image/jpeg, image/png"
         onChange={handleImageChange}
+        id="upload-button"
       />
+      <label htmlFor="upload-button">Choose a MRI</label>
 
       {preview && (
         <div className="preview-container">
           <img src={preview} alt="Preview" className="image-preview" />
         </div>
       )}
-
+      <br />
       <button onClick={handleUpload} disabled={loading}>
         {loading ? "Processing..." : "Upload & Predict"}
       </button>
