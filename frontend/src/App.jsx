@@ -1,11 +1,18 @@
 import React from "react";
-import Home from "./pages/Home";
 import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import PredictionPage from "./pages/PredictionPage";
+
 const App = () => {
   return (
     <div className="app">
-      <h1>MRI Brain Tumor Detection</h1>
-      <Home />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/predict" element={<PredictionPage />} />
+        </Routes>
+      </Router>
     </div>
   );
 };
