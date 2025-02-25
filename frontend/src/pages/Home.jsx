@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/home.css";
+import "../styles/Home.css";
 import GetStartedBtn from "../components/GetStartedBtn";
 import brainimage from "../assets/brain.png";
 const Home = () => {
