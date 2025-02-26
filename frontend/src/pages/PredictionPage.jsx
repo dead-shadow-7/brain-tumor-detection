@@ -7,7 +7,6 @@ const PredictionPage = () => {
 
   return (
     <div className="prediction">
-      <h1>MRI Brain Tumor Detection</h1>
       <ImageUpload setPrediction={setPrediction} />
       {prediction && <PredictionResult prediction={prediction} />}
     </div>

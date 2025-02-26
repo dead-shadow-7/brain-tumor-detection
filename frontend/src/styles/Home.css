@@ -39,7 +39,7 @@ h1 {
 .home img {
   position: absolute;
   right: 64px;
-  top: 50%;
+  top: 25%;
   transform: translateY(-50%);
   width: 480px;
   margin-top: 48px;

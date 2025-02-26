@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import "../styles/Home.css";
 import GetStartedBtn from "../components/GetStartedBtn";
+import About from "./About";
 import brainimage from "../assets/brain.png";
+import HorizontalLine from "../components/HorizontalLine";
+
 const Home = () => {
   return (
     <div className="home">
-      <h1>MRI Brain Tumor Detection</h1>
       <div className="title">
         Transform Tumor Detection With <br />
         AI
@@ -16,6 +18,8 @@ const Home = () => {
         accurate, and life-saving—get started today!
       </div>
       <GetStartedBtn />
+      <HorizontalLine color="white" />
+      <About />
     </div>
   );
 };
