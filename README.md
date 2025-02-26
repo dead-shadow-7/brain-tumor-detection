@@ -2,7 +2,7 @@
 
 An AI-powered web application for detecting brain tumors from MRI scans using a Convolutional Neural Network (CNN).
 
-[![Brain Tumor Detection](https://i.postimg.cc/L577SR9z/Screenshot-2025-02-26-125211.png)](https://postimg.cc/N26b83rM)
+![Brain Tumor Detection](./images/mainHome.png)
 
 ## Features
 
