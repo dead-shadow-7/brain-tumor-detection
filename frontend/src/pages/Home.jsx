@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "../styles/Home.css";
 import GetStartedBtn from "../components/GetStartedBtn";
-import About from "./About";
 import brainimage from "../assets/brain.png";
 import HorizontalLine from "../components/HorizontalLine";
 
@@ -19,7 +18,6 @@ const Home = () => {
       </div>
       <GetStartedBtn />
       <HorizontalLine color="white" />
-      <About />
     </div>
   );
 };
