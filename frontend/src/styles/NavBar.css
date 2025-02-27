@@ -1,3 +1,4 @@
+/* NavBar.css */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -5,40 +6,45 @@
   background-color: transparent;
   color: #fff;
   padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .navbar-left .logo {
-  font-size: 32px;
-  font-weight: 400;
+  font-size: 1.75rem;
+  font-weight: 500;
   color: #fff;
   text-decoration: none;
+  white-space: nowrap;
 }
 
-.navbar-center .nav-links {
+.navbar-right {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-right .nav-links {
   list-style-type: none;
   font-weight: 300;
   display: flex;
-  margin-left: 0;
   padding: 0;
+  margin: 0;
+  gap: 1.5rem;
 }
 
-.navbar-center .nav-links li {
-  margin-right: 1.2rem;
-}
-
-.navbar-center .nav-links a {
+.navbar-right .nav-links a {
   color: #fff;
   text-decoration: none;
   cursor: pointer;
-  transition: 0.4s;
   position: relative;
   padding-bottom: 2px;
+  transition: color 0.3s ease;
 }
 
-.navbar-center .nav-links a::after {
+.navbar-right .nav-links a::after {
   content: "";
   position: absolute;
-  height: 1px;
+  height: 2px;
   width: 0;
   left: 0;
   bottom: 0;
@@ -46,14 +52,27 @@
   transition: width 0.3s ease;
 }
 
-.navbar-center .nav-links a:hover::after {
+.navbar-right .nav-links a:hover::after,
+.navbar-right .nav-links a.active::after {
   width: 100%;
 }
 
-.navbar-right {
-  display: flex;
-  align-items: center;
-}
-.navbar-center {
-  margin-left: 45%;
+/* Media query for responsive design */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 0.75rem;
+  }
+
+  .navbar-left {
+    margin-bottom: 0.5rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .navbar-right {
+    width: 100%;
+    justify-content: center;
+    margin: 0.5rem 0;
+  }
 }

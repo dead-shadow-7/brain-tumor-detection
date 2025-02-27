@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import PredictionPage from "./pages/PredictionPage";
 import Navbar from "./components/NavBar";
-import NotFound from "./pages/NotFound";
+import PageNotFound from "./pages/PageNotFound";
+import { SignIn, SignUp } from "@clerk/clerk-react";
 
 const App = () => {
   return (
@@ -14,7 +15,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/predict" element={<PredictionPage />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/login" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
     </div>

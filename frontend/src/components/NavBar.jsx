@@ -1,7 +1,23 @@
-import React from "react";
+// NavBar.jsx
+import React, { useState, useEffect } from "react";
 import "../styles/NavBar.css";
 
-const Navbar = () => {
+const NavBar = () => {
+  const [activeLink, setActiveLink] = useState("");
+
+  useEffect(() => {
+    // Set active link based on current path
+    const path = window.location.pathname;
+    setActiveLink(path);
+  }, []);
+
+  const navLinks = [
+    { path: "/", label: "Home" },
+    { path: "/about", label: "About" },
+    { path: "/technology", label: "Technology" },
+    { path: "/contact", label: "Contact" },
+  ];
+
   return (
     <nav className="navbar">
       <div className="navbar-left">
@@ -9,25 +25,23 @@ const Navbar = () => {
           BRAIN TUMOR DETECTION
         </a>
       </div>
-      <div className="navbar-center">
+      <div className="navbar-right">
         <ul className="nav-links">
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a href="/about">About</a>
-          </li>
-          <li>
-            <a href="/technology">Technology</a>
-          </li>
-          <li>
-            <a href="/contact">Contact</a>
-          </li>
+          {navLinks.map(({ path, label }) => (
+            <li key={path}>
+              <a
+                href={path}
+                className={activeLink === path ? "active" : ""}
+                onClick={() => setActiveLink(path)}
+              >
+                {label}
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
-      <div className="navbar-right"></div>
     </nav>
   );
 };
 
-export default Navbar;
+export default NavBar;
