@@ -1,0 +1,15 @@
+.not-found {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
+  height: 75vh;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+}
+
+.not-found a {
+  text-decoration: none;
+}
