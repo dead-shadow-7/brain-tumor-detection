@@ -1,7 +1,7 @@
 // NavBar.jsx
 import React, { useState, useEffect } from "react";
 import "../styles/NavBar.css";
-
+import SignInOutButton from "./SignInOut";
 const NavBar = () => {
   const [activeLink, setActiveLink] = useState("");
 
@@ -39,6 +39,7 @@ const NavBar = () => {
             </li>
           ))}
         </ul>
+        <SignInOutButton />
       </div>
     </nav>
   );

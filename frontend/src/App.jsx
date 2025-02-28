@@ -11,8 +11,8 @@ import { SignIn, SignUp } from "@clerk/clerk-react";
 const App = () => {
   return (
     <div className="app">
-      <Navbar />
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
