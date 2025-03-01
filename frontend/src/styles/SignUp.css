@@ -1,0 +1,16 @@
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 75vh;
+}
+
+.cl-internal-1p733cp {
+  font-family: Poppins, serif;
+}
+
+.cl-internal-4x6jej > :not(:first-of-type) {
+  padding: 1rem 2rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.07);
+  display: none;
+}

@@ -8,7 +8,8 @@ import Contact from "./pages/Contact";
 import PredictionPage from "./pages/PredictionPage";
 import Navbar from "./components/NavBar";
 import PageNotFound from "./pages/PageNotFound";
-import { SignIn, SignUp } from "@clerk/clerk-react";
+import Login from "./pages/Login";
+import SignUpR from "./pages/SignUpR";
 
 const App = () => {
   return (
@@ -21,8 +22,8 @@ const App = () => {
           <Route path="/technology" element={<Technology />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/predict" element={<PredictionPage />} />
-          <Route path="/login" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUpR />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
