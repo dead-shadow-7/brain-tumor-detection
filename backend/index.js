@@ -103,14 +103,15 @@ app.post("/predict", upload.single("image"), async (req, res, next) => {
     const tumorType = extractTumorType(predictionString);
 
     // Generate content using Gemini API
-    const prompt = `Provide comprehensive information about ${tumorType} brain tumors, including:
-1. Common symptoms and how they present
-2. Typical treatment approaches and their effectiveness
-3. Long-term prognosis and survival rates
-4. Risk factors and what medical professionals look for in diagnosis
-5. Recent advances in treatment options
+    const prompt = `Provide a brief summary of ${tumorType} brain tumors:
+1. Key symptoms (3-4 points)
+2. Standard treatments (2-3 approaches)
+3. General prognosis
+4. Main risk factors
+5. One notable recent advancement
 
-Please structure this as detailed medical information that could help a healthcare provider explain the condition to a patient and structure it in plain text format.`;
+Format the response with HTML tags (<p> for paragraphs, <strong> for emphasis).
+Keep the response under 200 words total in simple, clear language for web display.`;
 
     try {
       const geminiResponse = await geminiModel.generateContent(prompt);

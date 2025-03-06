@@ -3,7 +3,7 @@ import axios from "axios";
 import "../styles/imageupload.css";
 const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-const ImageUpload = ({ setPrediction }) => {
+const ImageUpload = ({ setPrediction, setMedicalInfo }) => {
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -32,12 +32,14 @@ const ImageUpload = ({ setPrediction }) => {
       setLoading(true);
       setError("");
       setPrediction(null); // Reset previous result
+      setMedicalInfo(null); // Reset previous medical info
 
       const response = await axios.post(`${backendUrl}/predict`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      setPrediction(response.data.data.prediction);
+      setPrediction(response.data.data.tumorType);
+      setMedicalInfo(response.data.data.medicalInfo);
     } catch (err) {
       setError("Error processing image.");
       console.error(err);

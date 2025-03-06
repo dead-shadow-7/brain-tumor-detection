@@ -1,14 +1,29 @@
 import React, { useState } from "react";
 import ImageUpload from "../components/ImageUpload";
-import PredictionResult from "../components/PredictionResult";
+import "../styles/predictionpage.css"; // Import the CSS file
 
 const PredictionPage = () => {
   const [prediction, setPrediction] = useState(null);
+  const [medicalInfo, setMedicalInfo] = useState(null);
 
   return (
-    <div className="prediction">
-      <ImageUpload setPrediction={setPrediction} />
-      {prediction && <PredictionResult prediction={prediction} />}
+    <div className="prediction-page">
+      <ImageUpload
+        setPrediction={setPrediction}
+        setMedicalInfo={setMedicalInfo}
+      />
+      {prediction && (
+        <div className="result">
+          <h2>Prediction Result</h2>
+          <p>{prediction}</p>
+        </div>
+      )}
+      {medicalInfo && (
+        <div className="medical-info">
+          <h2>Medical Information</h2>
+          <div dangerouslySetInnerHTML={{ __html: medicalInfo }} />
+        </div>
+      )}
     </div>
   );
 };

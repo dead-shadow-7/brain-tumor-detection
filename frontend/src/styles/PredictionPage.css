@@ -1,0 +1,23 @@
+.prediction-page {
+  text-align: center;
+  padding: 20px;
+}
+
+.result,
+.medical-info {
+  margin-top: 20px;
+}
+
+.result h2,
+.medical-info h2 {
+  margin-bottom: 10px;
+}
+
+.result p,
+.medical-info p {
+  white-space: pre-wrap; /* Preserve newlines and whitespace */
+  text-align: left;
+  margin: 0 auto;
+  max-width: 720px;
+  margin-bottom: 16px;
+}
