@@ -3,6 +3,7 @@ import multer from "multer";
 import cors from "cors";
 import { Client } from "@gradio/client";
 import dotenv from "dotenv";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Load environment variables
 dotenv.config();
@@ -13,6 +14,8 @@ const CONFIG = {
   HF_SPACE: process.env.HF_SPACE,
   MAX_FILE_SIZE: 5 * 1024 * 1024, // 5MB limit
   ALLOWED_MIME_TYPES: ["image/jpeg", "image/png"],
+  GEMINI_API_KEY: process.env.GEMINI_API_KEY,
+  GEMINI_MODEL: "gemini-1.5-flash-002",
 };
 
 // Initialize Express app
@@ -33,13 +36,17 @@ const upload = multer({
     if (CONFIG.ALLOWED_MIME_TYPES.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      cb(new Error("Invalid file type. Only JPEG, PNG and GIF are allowed."));
+      cb(new Error("Invalid file type. Only JPEG and PNG are allowed."));
     }
   },
 });
 
 // Initialize Gradio client outside request handler
 let gradioClient = null;
+
+// Initialize Gemini client
+const genAI = new GoogleGenerativeAI(CONFIG.GEMINI_API_KEY);
+const geminiModel = genAI.getGenerativeModel({ model: CONFIG.GEMINI_MODEL });
 
 // Initialize Gradio client connection
 const initializeGradioClient = async () => {
@@ -52,6 +59,13 @@ const initializeGradioClient = async () => {
   }
 };
 
+// Function to extract tumor type from prediction string
+const extractTumorType = (predictionString) => {
+  // Example: "Prediction: meningioma_tumor (Confidence: 1.00)"
+  const match = predictionString.match(/Prediction: (\w+)_tumor/);
+  return match ? match[1] : "unknown";
+};
+
 // Error handling middleware
 const errorHandler = (err, req, res, next) => {
   console.error("Error:", err);
@@ -61,7 +75,7 @@ const errorHandler = (err, req, res, next) => {
   });
 };
 
-// Route to process MRI images
+// Route to process MRI images and get Gemini response
 app.post("/predict", upload.single("image"), async (req, res, next) => {
   try {
     // Validate request
@@ -77,18 +91,55 @@ app.post("/predict", upload.single("image"), async (req, res, next) => {
       await initializeGradioClient();
     }
 
-    // Process image
+    // Process image with Gradio
     const imageBlob = new Blob([req.file.buffer], { type: req.file.mimetype });
     const result = await gradioClient.predict("/predict", { image: imageBlob });
-    console.log("Prediction result:", result);
-    // Format and send response
-    res.json({
-      status: "success",
-      data: {
-        prediction: result.data[0],
-        timestamp: new Date().toISOString(),
-      },
-    });
+
+    // Extract the prediction string
+    const predictionString = result.data[0];
+    console.log("Prediction result:", predictionString);
+
+    // Extract tumor type for the Gemini prompt
+    const tumorType = extractTumorType(predictionString);
+
+    // Generate content using Gemini API
+    const prompt = `Provide comprehensive information about ${tumorType} brain tumors, including:
+1. Common symptoms and how they present
+2. Typical treatment approaches and their effectiveness
+3. Long-term prognosis and survival rates
+4. Risk factors and what medical professionals look for in diagnosis
+5. Recent advances in treatment options
+
+Please structure this as detailed medical information that could help a healthcare provider explain the condition to a patient and structure it in plain text format.`;
+
+    try {
+      const geminiResponse = await geminiModel.generateContent(prompt);
+      const responseText = geminiResponse.response.text();
+
+      // Format and send response with both prediction and Gemini response
+      res.json({
+        status: "success",
+        data: {
+          prediction: predictionString,
+          tumorType: tumorType,
+          medicalInfo: responseText,
+          timestamp: new Date().toISOString(),
+        },
+      });
+    } catch (geminiError) {
+      console.error("Gemini API error:", geminiError);
+      // Still return the prediction even if Gemini fails
+      res.json({
+        status: "partial_success",
+        data: {
+          prediction: predictionString,
+          tumorType: tumorType,
+          medicalInfo: "Failed to generate additional medical information.",
+          timestamp: new Date().toISOString(),
+        },
+        error: geminiError.message,
+      });
+    }
   } catch (error) {
     next(error);
   }
