@@ -12,18 +12,19 @@ h1 {
 }
 
 .title {
-  font-weight: 300;
+  /* Remove or adjust these styles */
+  /* font-weight: 300;
   font-style: normal;
   font-size: 56px;
-  width: 680px;
+  width: 680px; */
   margin-left: 64px;
-  margin-top: 64px;
+  margin-top: 155px;
 }
 
 .description {
   font-weight: 100;
   font-style: normal;
-  font-size: 22px;
+  font-size: 20px;
   width: 680px;
   margin-left: 64px;
   margin-bottom: 36px;
@@ -39,10 +40,9 @@ h1 {
 .home img {
   position: absolute;
   right: 64px;
-  top: 35%;
+  top: 45%;
   transform: translateY(-50%);
   width: 480px;
-  margin-top: 48px;
-  /* box-shadow: 0 0 20px rgba(255, 255, 255, 0.6); */
+  margin-top: 68px;
   filter: drop-shadow(0 0 300px rgba(255, 255, 255, 0.3));
 }

@@ -1,0 +1,74 @@
+.technology-container {
+    background: linear-gradient(135deg, #1c1c1e, #0a0a0b); 
+    color: #e0e0e0;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    min-height: 100vh;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .technology-header h1 {
+    font-size: 3em;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #64b5f6;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .technology-content {
+    max-width: 1000px;
+    width: 90%;
+  }
+  
+  .tech-section {
+    margin-bottom: 40px;
+  }
+  
+  .tech-section h2 {
+    font-size: 2em;
+    color: #81d4fa;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #64b5f6;
+    padding-bottom: 10px;
+  }
+  
+  .tech-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .tech-list li {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #bdbdbd;
+    position: relative;
+    padding-left: 20px;
+  }
+  
+  .tech-list li::before {
+    content: "»"; 
+    position: absolute;
+    left: 0;
+    color: #64b5f6;
+  }
+  
+  .description {
+    margin-top: 30px;
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #9e9e9e;
+    text-align: justify;
+  }
+  
+  /* Add glow effect */
+  .tech-list li:hover {
+    color: #fff;
+    transition: color 0.3s ease;
+  }
+  
+  .tech-list li:hover::before {
+    color: #fff;
+  }
