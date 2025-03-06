@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ImageUpload from "../components/ImageUpload";
-import "../styles/predictionpage.css"; // Import the CSS file
+import "../styles/PredictionPage.css"; // Import the CSS file
 
 const PredictionPage = () => {
   const [prediction, setPrediction] = useState(null);
