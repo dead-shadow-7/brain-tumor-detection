@@ -60,6 +60,7 @@ Create a `.env` file in the frontend directory:
 
 ```
 VITE_BACKEND_URL=http://localhost:5000
+VITE_CLERK_PUBLISHABLE_KEY=YOUR_CLERK_KEY
 ```
 
 ### Backend Setup
