@@ -1,23 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import "../styles/Home.css";
 import GetStartedBtn from "../components/GetStartedBtn";
 import brainimage from "../assets/brain.png";
-import HorizontalLine from "../components/HorizontalLine";
+import TrueFocus from "../components/TrueFocus";
 
 const Home = () => {
   return (
     <div className="home">
       <div className="title">
-        Transform Tumor Detection With <br />
-        AI
+        <TrueFocus
+          sentence="Transform Tumor"
+          manualMode={false}
+          blurAmount={4}
+          borderColor="white"
+          animationDuration={1}
+          pauseBetweenAnimations={1}
+        />
+        <br />
+        <span style={{ fontSize: "3rem", fontWeight: "900" }}>
+          Detection With AI
+        </span>
       </div>
       <img src={brainimage} alt="Brain Image" />
       <div className="description">
-        Revolutionize healthcare with AI -driven brain tumor detection. Fast,
+        Revolutionize healthcare with AI-driven brain tumor detection. Fast,
         accurate, and life-saving—get started today!
       </div>
       <GetStartedBtn />
-      <HorizontalLine color="white" />
     </div>
   );
 };
