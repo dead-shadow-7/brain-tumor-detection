@@ -8,6 +8,7 @@
   padding: 1rem;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 
 .navbar-left .logo {
@@ -57,22 +58,108 @@
   width: 100%;
 }
 
-/* Media query for responsive design */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  cursor: pointer;
+  z-index: 11;
+  /* Improve click target size with padding */
+  padding: 10px;
+  margin: -10px;
+  position: relative;
+}
+
+.menu-toggle span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background-color: white;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+/* Media queries for responsive design */
 @media (max-width: 768px) {
   .navbar {
-    flex-direction: column;
-    padding: 0.75rem;
+    padding: 1rem;
+    flex-direction: row;
   }
 
   .navbar-left {
-    margin-bottom: 0.5rem;
-    width: 100%;
-    text-align: center;
+    z-index: 11;
+  }
+
+  .navbar-left .logo {
+    font-size: 1.5rem;
+  }
+
+  .menu-toggle {
+    display: flex;
+    position: absolute;
+    right: 1rem;
+    top: 1.5rem;
+  }
+
+  .menu-toggle.active span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+
+  .menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
   }
 
   .navbar-right {
-    width: 100%;
+    position: fixed;
+    flex-direction: column;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    overflow: hidden;
+    transition: width 0.3s ease;
+    z-index: 10;
     justify-content: center;
-    margin: 0.5rem 0;
+    padding: 0;
+  }
+
+  .navbar-right.active {
+    width: 100%;
+  }
+
+  .navbar-right .nav-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .navbar-right .nav-links li {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition-delay: 0.1s;
+  }
+
+  .navbar-right.active .nav-links li {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .navbar-right .nav-links a {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-left .logo {
+    font-size: 1.25rem;
   }
 }

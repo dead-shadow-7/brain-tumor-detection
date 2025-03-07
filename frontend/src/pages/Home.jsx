@@ -23,8 +23,9 @@ const Home = () => {
       </div>
       <img src={brainimage} alt="Brain Image" />
       <div className="description">
-        Revolutionize healthcare with AI-driven brain tumor detection. Fast,
-        accurate, and life-saving—get started today!
+        Revolutionize healthcare with AI-driven brain tumor detection.
+        <br />
+        Fast, accurate and life-saving—get started today!
       </div>
       <GetStartedBtn />
     </div>

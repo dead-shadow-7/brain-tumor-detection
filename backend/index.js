@@ -15,7 +15,7 @@ const CONFIG = {
   MAX_FILE_SIZE: 5 * 1024 * 1024, // 5MB limit
   ALLOWED_MIME_TYPES: ["image/jpeg", "image/png"],
   GEMINI_API_KEY: process.env.GEMINI_API_KEY,
-  GEMINI_MODEL: "gemini-1.5-flash-002",
+  GEMINI_MODEL: "gemini-2.0-flash",
 };
 
 // Initialize Express app
