@@ -22,7 +22,12 @@ Keep the response under 200 words total in simple, clear language for web displa
 
   try {
     const geminiResponse = await geminiModel.generateContent(prompt);
-    return geminiResponse.response.text();
+    let responseText = geminiResponse.response.text();
+
+    // Clean up the response if it still has markdown code blocks
+    responseText = responseText.replace(/```html\n/g, "").replace(/\n```/g, "");
+
+    return responseText;
   } catch (error) {
     console.error("Gemini API error:", error);
     throw error;
