@@ -17,7 +17,7 @@ const Home = () => {
           pauseBetweenAnimations={1}
         />
         <br />
-        <span style={{ fontSize: "3rem", fontWeight: "900" }}>
+        <span style={{ fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: "900" }}>
           Detection With AI
         </span>
       </div>
