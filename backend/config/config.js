@@ -8,4 +8,5 @@ export const CONFIG = {
   ALLOWED_MIME_TYPES: ["image/jpeg", "image/png"],
   GEMINI_API_KEY: process.env.GEMINI_API_KEY,
   GEMINI_MODEL: "gemini-2.0-flash",
+  MONGODB_URI: process.env.MONGODB_URI,
 };
