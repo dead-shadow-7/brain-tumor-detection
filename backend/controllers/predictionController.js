@@ -1,6 +1,6 @@
 import { processImage, generateTumorInfo } from "../services/tumorService.js";
 import { extractTumorType } from "../utils/tumorUtils.js";
-import Prediction from "../models/prediction.js"; // Import the new model
+import Prediction from "../models/prediction.js";
 
 export const predictTumor = async (req, res, next) => {
   try {
@@ -11,6 +11,9 @@ export const predictTumor = async (req, res, next) => {
         status: "error",
       });
     }
+
+    // Get the user ID from the request
+    const userId = req.body.userId;
 
     // Process image with Gradio
     const predictionString = await processImage(
@@ -32,6 +35,7 @@ export const predictTumor = async (req, res, next) => {
         tumorType: tumorType,
         medicalInfo: medicalInfo,
         timestamp: new Date().toISOString(),
+        userId: userId || null,
       };
 
       // Create new prediction record
@@ -39,8 +43,7 @@ export const predictTumor = async (req, res, next) => {
         prediction: predictionString,
         tumorType: tumorType,
         medicalInfo: medicalInfo,
-        // Optional: Add userId if available
-        // userId: req.user?._id,
+        userId: userId || null,
         // Optional: Store image path if you're saving the image
         // imagePath: imagePath
       });
@@ -53,7 +56,7 @@ export const predictTumor = async (req, res, next) => {
       res.json({
         status: "success",
         data: predictionData,
-        _id: savedPrediction._id, // Include the database ID in the response
+        _id: savedPrediction._id,
       });
     } catch (geminiError) {
       // Still return the prediction even if Gemini fails
@@ -62,6 +65,7 @@ export const predictTumor = async (req, res, next) => {
         tumorType: tumorType,
         medicalInfo: "Failed to generate additional medical information.",
         timestamp: new Date().toISOString(),
+        userId: userId || null,
       };
 
       // Save basic prediction to database even if Gemini fails
@@ -69,6 +73,7 @@ export const predictTumor = async (req, res, next) => {
         prediction: predictionString,
         tumorType: tumorType,
         medicalInfo: "Failed to generate additional medical information.",
+        userId: userId || null,
       });
 
       const savedPrediction = await newPrediction.save();
@@ -85,16 +90,20 @@ export const predictTumor = async (req, res, next) => {
   }
 };
 
-// New function to get prediction history
+// Update getPredictionHistory to filter by userId if provided
 export const getPredictionHistory = async (req, res, next) => {
   try {
-    // Optional: Add filtering by userId if you have user authentication
-    // const userId = req.user._id;
-    // const predictions = await Prediction.find({ userId });
+    // Get userId from query params or request body
+    const userId = req.query.userId || req.body.userId;
 
-    const predictions = await Prediction.find()
-      .sort({ timestamp: -1 }) // Sort by newest first
-      .limit(20); // Limit to recent predictions
+    let query = {};
+    if (userId) {
+      query.userId = userId;
+    }
+
+    const predictions = await Prediction.find(query)
+      .sort({ timestamp: -1 })
+      .limit(20);
 
     res.json({
       status: "success",

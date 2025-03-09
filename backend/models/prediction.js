@@ -18,13 +18,11 @@ const predictionSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  // Optional: link to user if you want to associate predictions with users
+  // Updated: Change to String type to match Clerk's user IDs
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: String,
     required: false,
   },
-  // Optional: store the original image reference or path
   imagePath: {
     type: String,
     required: false,
