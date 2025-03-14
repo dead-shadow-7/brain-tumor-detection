@@ -12,6 +12,7 @@ const Technology = () => {
           <h2>Frontend</h2>
           <ul className="tech-list">
             <li>React.js</li>
+            <li>Vite</li>
             <li>HTML5</li>
             <li>CSS3</li>
             <li>JavaScript (ES6+)</li>
@@ -21,21 +22,23 @@ const Technology = () => {
         <div className="tech-section">
           <h2>Backend</h2>
           <ul className="tech-list">
-            <li>Python (Flask or FastAPI)</li>
+            <li>NodeJS</li>
+            <li>ExpressJS</li>
             <li>TensorFlow/PyTorch (for AI models)</li>
           </ul>
         </div>
         <div className="tech-section">
           <h2>Database</h2>
           <ul className="tech-list">
-            <li>(If Applicable) PostgreSQL/MongoDB</li>
+            <li>MongoDB</li>
           </ul>
         </div>
         <div className="tech-section">
           <h2>Deployment</h2>
           <ul className="tech-list">
-            <li>Docker</li>
-            <li>AWS/Google Cloud/Azure</li>
+            <li>Hugging Face (Models)</li>
+            <li>Vercel (Front End)</li>
+            <li>Render.com (Back End)</li>
           </ul>
         </div>
         {/* <div className="description">
