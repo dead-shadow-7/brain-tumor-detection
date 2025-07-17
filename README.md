@@ -82,6 +82,14 @@ GEMINI_API_KEY=YOUR-GEMINI-API-KEY
 MONGODB_URI=YOUR-MONGODB-URL
 ```
 
+## Hugging face model URL
+
+https://huggingface.co/spaces/shivam12119/braintumor
+
+## Jupyter Notebook
+
+https://huggingface.co/spaces/shivam12119/braintumor/blob/main/datasetv2.ipynb
+
 ## Usage
 
 1. Open the link from the console
