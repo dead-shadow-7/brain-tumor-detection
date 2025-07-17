@@ -49,7 +49,7 @@ const ImageUpload = ({ setPrediction, setMedicalInfo }) => {
         formData.append("userId", user.id);
       }
 
-      const response = await axios.post(`${backendUrl}/predict`, formData, {
+      const response = await axios.post(`${backendUrl}/api/predict`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

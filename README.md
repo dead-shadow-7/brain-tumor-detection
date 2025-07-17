@@ -77,8 +77,9 @@ Create a `.env` file in the backend directory:
 
 ```
 HUGGINGFACE_API_KEY=your_api_key_here (Optional if your model is private)
-
 HF_SPACE=your_model_endpoint_here
+GEMINI_API_KEY=YOUR-GEMINI-API-KEY
+MONGODB_URI=YOUR-MONGODB-URL
 ```
 
 ## Usage
@@ -90,7 +91,7 @@ HF_SPACE=your_model_endpoint_here
 
 ## API Endpoints
 
-### POST /api/analyze
+### POST /api/predict
 
 Accepts an MRI image and returns detection results.
 
@@ -100,15 +101,19 @@ Accepts an MRI image and returns detection results.
 - Content-Type: multipart/form-data
 - Body: form-data with key "image" containing the MRI scan file
 
-**Response:**
+**Sample Response:**
 
-```json
+```
 {
-  "status": "success",
-  "data": {
-    "prediction": "Prediction: meningioma_tumor (Confidence: 1.00)",
-    "timestamp": "2025-02-26T07:20:40.409Z"
-  }
+"status": "success",
+"data": {
+  "prediction": "Prediction: pituitary_tumor (Confidence: 1.00)",
+  "tumorType": "pituitary",
+  "medicalInfo": "<p>Pituitary brain tumors are abnormal growths in the pituitary gland, a small but vital gland that controls hormone production. While usually benign, they can cause problems by pressing on surrounding structures or disrupting hormone balance.</p>\n\n<p><strong>Key symptoms</strong> often include vision problems (like double vision or loss of peripheral vision), headaches, hormonal imbalances (leading to fatigue, menstrual changes, or erectile dysfunction), and unintended weight gain or loss.</p>\n\n<p><strong>Standard treatments</strong> depend on the tumor type and size, and may include surgery (often through the nose), radiation therapy, or medication to control hormone production.</p>\n\n<p>The <strong>prognosis</strong> for pituitary tumors is generally good, especially for non-cancerous tumors. Many patients can live normal lives after treatment, though hormone monitoring may be necessary.</p>\n\n<p>There are no definitive <strong>risk factors</strong>. Some genetic conditions, such as Multiple Endocrine Neoplasia type 1 (MEN1), can increase the risk, but most tumors occur spontaneously.</p>\n\n<p>One <strong>notable recent advancement</strong> is the increasing use of minimally invasive endoscopic surgery, offering faster recovery times and fewer complications for some patients.</p>",
+  "timestamp": "2025-07-17T11:50:23.963Z",
+  "userId": "test1234"
+},
+"\_id": "6878e37f8f6160275e31fe7b"
 }
 ```
 
